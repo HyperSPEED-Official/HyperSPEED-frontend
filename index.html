@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyperSPEED - Coming Soon</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #0a0a1f; /* Deep space blue */
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .comet {
+            position: absolute;
+            width: 2px;
+            height: 4px;  /* Made particles taller */
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 3px #fff, 0 0 5px #fff;
+            opacity: 0.8;
+            transform: translateZ(0);
+        }
+
+        @keyframes warpSpeed {
+            0% {
+                transform: translateZ(0) scale(0.1);
+                opacity: 0.8;
+                height: 2px;
+            }
+            100% {
+                transform: translateZ(2000px) scale(4);  /* Increased travel distance and scale */
+                opacity: 0;
+                height: 50px;  /* Stretch effect at high speed */
+            }
+        }
+
+        .warp-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .content {
+            text-align: center;
+            color: #fff;
+            z-index: 1;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; /* Green glow */
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin: 0;
+            letter-spacing: 5px;
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            margin-top: 20px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .social-link svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body>
+    <div class="warp-container"></div>
+    <div class="content">
+        <h1>HyperSPEED</h1>
+        <p>Coming Soon to Hyperliquid EVM</p>
+        <a href="https://x.com/0xHyperSPEED" target="_blank" rel="noopener" class="social-link">
+            <svg viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            Follow on X
+        </a>
+    </div>
+
+    <script>
+        const container = document.querySelector('.warp-container');
+
+        function createComet() {
+            const comet = document.createElement('div');
+            comet.className = 'comet';
+
+            const x = Math.random() * window.innerWidth - window.innerWidth / 2;
+            const y = Math.random() * window.innerHeight - window.innerHeight / 2;
+            
+            comet.style.left = `${window.innerWidth/2 + x}px`;
+            comet.style.top = `${window.innerHeight/2 + y}px`;
+
+            // Faster animation (0.5s to 1.5s instead of 1s to 3s)
+            const duration = 0.5 + Math.random();
+            comet.style.animation = `warpSpeed ${duration}s linear forwards`;
+
+            container.appendChild(comet);
+
+            comet.addEventListener('animationend', () => {
+                comet.remove();
+            });
+        }
+
+        // Create particles more frequently (every 20ms instead of 50ms)
+        setInterval(createComet, 20);
+
+        // Initial burst of more particles
+        for (let i = 0; i < 150; i++) {
+            setTimeout(createComet, i * 10);
+        }
+    </script>
+</body>
+</html>
